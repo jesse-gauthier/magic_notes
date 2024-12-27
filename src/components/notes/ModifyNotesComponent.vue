@@ -1,6 +1,6 @@
 <template>
   <div class="border-4">
-    <QuillEditor theme="bubble" toolbar="full" ref="quillEditor" />
+    <QuillEditor width="full" :theme="editorTheme" toolbar="full" ref="quillEditor" />
   </div>
 </template>
 
@@ -14,6 +14,8 @@ const props = defineProps({
 })
 
 const quillEditor = ref(null)
+const isEditMode = ref(false)
+const editorTheme = ref('bubble')
 
 onMounted(() => {
   setNotesText(props.note.content)
@@ -24,5 +26,10 @@ function setNotesText(text) {
     const editor = quillEditor.value.getQuill()
     editor.pasteHTML(text)
   }
+}
+
+function toggleEditMode() {
+  isEditMode.value = !isEditMode.value
+  editorTheme.value = isEditMode.value ? 'snow' : 'bubble'
 }
 </script>

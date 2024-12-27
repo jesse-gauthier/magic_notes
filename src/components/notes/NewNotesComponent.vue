@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="border-4">
-      <QuillEditor theme="snow" toolbar="full" ref="quillRef" />
+      <QuillEditor
+        theme="snow"
+        toolbar="full"
+        ref="quillRef"
+        :class="{ expanded_quill: isExpanded }"
+      />
+      <button @click="toggleExpansion" class="block ml-auto p-4 hover:underline">
+        {{ isExpanded ? 'Collapse' : 'Expand' }}
+      </button>
     </div>
     <button class="btn btn-success" @click="saveNote">Save Note</button>
   </div>
@@ -14,6 +22,7 @@ import { QuillEditor } from '@vueup/vue-quill'
 
 const notesStore = useNotesStore()
 const quillRef = ref(null)
+const isExpanded = ref(false)
 
 function saveNote() {
   if (quillRef.value) {
@@ -27,4 +36,14 @@ function saveNote() {
     console.error('Quill editor instance not found.')
   }
 }
+
+function toggleExpansion() {
+  isExpanded.value = !isExpanded.value
+}
 </script>
+
+<style>
+.expanded_quill {
+  height: 70vh;
+}
+</style>
