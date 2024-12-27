@@ -2,6 +2,7 @@ import './assets/main.css'
 //
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.bubble.css'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

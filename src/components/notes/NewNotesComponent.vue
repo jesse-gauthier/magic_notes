@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="border-4">
-      <QuillEditor theme="bubble" toolbar="full" ref="quillRef" @blur="saveNoteOnBlur" />
+      <QuillEditor theme="snow" toolbar="full" ref="quillRef" />
     </div>
-    <button class="btn btn-success">Save Note</button>
+    <button class="btn btn-success" @click="saveNote">Save Note</button>
   </div>
 </template>
 
@@ -15,10 +15,14 @@ import { QuillEditor } from '@vueup/vue-quill'
 const notesStore = useNotesStore()
 const quillRef = ref(null)
 
-function saveNoteOnBlur() {
-  const quillEditor = quillRef.value.getHTML()
-  if (quillEditor) {
-    notesStore.addNote(quillEditor)
+function saveNote() {
+  if (quillRef.value) {
+    const quillEditor = quillRef.value.getHTML()
+    if (quillEditor.trim() !== '') {
+      notesStore.addNote(quillEditor)
+    } else {
+      console.error('Note cannot be empty.')
+    }
   } else {
     console.error('Quill editor instance not found.')
   }
