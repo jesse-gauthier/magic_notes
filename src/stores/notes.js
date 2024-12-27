@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { supabase } from '@/lib/supabase/supabase' // Import your Supabase instance
 import DOMPurify from 'dompurify'
@@ -7,6 +7,10 @@ export const useNotesStore = defineStore('notes', () => {
   const notes = ref([])
   const error = ref(null)
   const loading = ref(false)
+
+  onMounted(() => {
+    fetchNotes()
+  })
 
   const addNote = async (note) => {
     try {
