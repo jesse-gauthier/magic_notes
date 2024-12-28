@@ -11,7 +11,13 @@
         {{ isExpanded ? 'Collapse' : 'Expand' }}
       </button>
     </div>
-    <button class="btn btn-success" @click="saveNote">Save Note</button>
+    <input
+      type="text"
+      v-model="projectName"
+      placeholder="Enter project name"
+      class="block w-full p-2 mb-4 border border-gray-400 rounded"
+    />
+    <button class="btn btn-outline my-5" @click="saveNote">Save Note</button>
   </div>
 </template>
 
@@ -23,12 +29,13 @@ import { QuillEditor } from '@vueup/vue-quill'
 const notesStore = useNotesStore()
 const quillRef = ref(null)
 const isExpanded = ref(false)
+const projectName = ref('')
 
 function saveNote() {
   if (quillRef.value) {
     const quillEditor = quillRef.value.getHTML()
     if (quillEditor.trim() !== '') {
-      notesStore.addNote(quillEditor)
+      notesStore.addNote(quillEditor, projectName.value)
     } else {
       console.error('Note cannot be empty.')
     }

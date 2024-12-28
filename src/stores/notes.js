@@ -12,12 +12,14 @@ export const useNotesStore = defineStore('notes', () => {
     fetchNotes()
   })
 
-  const addNote = async (note) => {
+  const addNote = async (note, project_name) => {
     try {
       loading.value = true
       const sanitizedNote = DOMPurify.sanitize(note)
+      const sanitizedProjectName = DOMPurify.sanitize(project_name)
       const notesData = {
         content: sanitizedNote,
+        project_name: sanitizedProjectName,
       }
       console.log(notesData)
       const { data, error } = await supabase.from('notes').insert(notesData)
